@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
+        gameOver.SetActive(false);
+        
         highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         
         Application.targetFrameRate = 144;
