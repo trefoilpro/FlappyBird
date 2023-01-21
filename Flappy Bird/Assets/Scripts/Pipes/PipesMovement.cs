@@ -1,23 +1,27 @@
 using UnityEngine;
 
-public class PipesMovement : MonoBehaviour
+namespace Pipes
 {
-    [SerializeField] private float speed = 5f;
+    public class PipesMovement : MonoBehaviour
+    {
+        [SerializeField] private float speed = 5f;
     
-    private float leftEdge;
+        private float leftEdge;
 
-    private void Start()
-    {
-        leftEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 5f;
-    }
-
-    private void Update()
-    {
-        transform.position += Vector3.left * speed * Time.deltaTime;
-        
-        if (transform.position.x < leftEdge)
+        private void Start()
         {
-            Destroy(gameObject);    
+            if (Camera.main != null) 
+                leftEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 5f;
+        }
+
+        private void Update()
+        {
+            transform.position += Vector3.left * (speed * Time.deltaTime);
+        
+            if (transform.position.x < leftEdge)
+            {
+                Destroy(gameObject);    
+            }
         }
     }
 }

@@ -1,90 +1,103 @@
-using System;
+using Pipes;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private PlayerMovement _playerMovement;
-    [SerializeField] private PlayerAnimation _playerAnimation;
-    [SerializeField] private PipeSpawner _pipeSpawner;
-    [SerializeField] private DBManager _dbManager;
-    
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text highScoreText;
-    
-    [SerializeField] private GameObject highScore;
-    [SerializeField] private GameObject playButton;
-    [SerializeField] private GameObject gameOver;
-    [SerializeField] private GameObject getReady;
-    
-    public int score { get; set; }
-
-    public void Awake()
+    public class GameManager : MonoBehaviour
     {
-        gameOver.SetActive(false);
+        public int Score { get; set; }
+        public bool PlayerNeedTutorial { get; set; } = true;
         
-        highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        public GameObject tutorial;
         
-        Application.targetFrameRate = 144;
-        
-        Pause();
-    }
+        [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private PlayerAnimation _playerAnimation;
+        [SerializeField] private PipeSpawner _pipeSpawner;
+        [SerializeField] private DBManager _dbManager;
+    
+        [SerializeField] private Text scoreText;
+        [SerializeField] private Text highScoreText;
+    
+        [SerializeField] private GameObject highScore;
+        [SerializeField] private GameObject playButton;
+        [SerializeField] private GameObject gameOver;
+        [SerializeField] private GameObject getReady;
 
-    public void Play()
-    {
-        _pipeSpawner.pipesSpwaned = 0;
-        score = 0;
-        scoreText.text = score.ToString();
-        
-        playButton.SetActive(false);
-        getReady.SetActive(false);
-        gameOver.SetActive(false);
-        highScore.SetActive(false);
-
-        Time.timeScale = 1f;
-        
-        _playerMovement.enabled = true;
-        _playerAnimation.enabled = true;
-
-        PipesMovement[] pipes = FindObjectsOfType<PipesMovement>();
-
-        foreach (var pipe in pipes)
+        public void Awake()
         {
-            Destroy(pipe.gameObject);
+            highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        
+            Application.targetFrameRate = 144;
+        
+            Pause();
+        
+            gameOver.SetActive(false);
         }
-    }
 
-    private void Pause()
-    {
-        Time.timeScale = 0f;
-        
-        _playerMovement.enabled = false;
-        _playerAnimation.enabled = false;
-    }
-
-    public void GameOver()
-    {
-        gameOver.SetActive(true);
-        playButton.SetActive(true);
-        highScore.SetActive(true);
-
-        SavingHighScore();
-        _dbManager.PostData();
-        Pause();
-    }
-
-    public void InceaseScore()
-    {
-        score++;
-        scoreText.text = score.ToString();
-    }
-    
-    private void SavingHighScore()
-    {
-        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        public void Play()
         {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScoreText.text = score.ToString();
+            _pipeSpawner.PipesSpwaned = 0;
+            Score = 0;
+            scoreText.text = Score.ToString();
+        
+            if (PlayerNeedTutorial)
+            {
+                tutorial.SetActive(true);
+            }
+            
+            playButton.SetActive(false);
+            getReady.SetActive(false);
+            gameOver.SetActive(false);
+            highScore.SetActive(false);
+
+            Time.timeScale = 1f;
+        
+            _playerMovement.enabled = true;
+            _playerAnimation.enabled = true;
+
+            PipesMovement[] pipes = FindObjectsOfType<PipesMovement>();
+
+            foreach (var pipe in pipes)
+            {
+                Destroy(pipe.gameObject);
+            }
+        }
+
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+
+            _playerMovement.enabled = false;
+            _playerAnimation.enabled = false;
+        }
+
+        public void GameOver()
+        {
+            gameOver.SetActive(true);
+            playButton.SetActive(true);
+            highScore.SetActive(true);
+            tutorial.SetActive(false);
+
+            SavingHighScore();
+            _dbManager.PostData();
+            Pause();
+        }
+
+        public void InceaseScore()
+        {
+            Score++;
+            scoreText.text = Score.ToString();
+        }
+    
+        private void SavingHighScore()
+        {
+            if (Score > PlayerPrefs.GetInt("HighScore", 0))
+            {
+                PlayerPrefs.SetInt("HighScore", Score);
+                highScoreText.text = Score.ToString();
+            }
         }
     }
 }

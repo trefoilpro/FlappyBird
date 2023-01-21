@@ -1,19 +1,23 @@
+using Managers;
 using UnityEngine;
 
-public class CheckCollision : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private GameManager _gameManager;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class CheckCollision : MonoBehaviour
     {
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            _gameManager.GameOver();
-        }
+        [SerializeField] private GameManager _gameManager;
 
-        if (other.gameObject.CompareTag("Scoring"))
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            _gameManager.InceaseScore();
+            if (other.gameObject.CompareTag("Obstacle"))
+            {
+                _gameManager.GameOver();
+            }
+
+            if (other.gameObject.CompareTag("Scoring"))
+            {
+                _gameManager.InceaseScore();
+            }
         }
     }
 }

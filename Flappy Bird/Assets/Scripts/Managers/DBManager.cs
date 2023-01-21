@@ -3,54 +3,57 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class DBManager : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private GameManager _gameManager;
-
-    private string requestDownloadedText;
-    private Text score;
-    [SerializeField] private string uri = "https://jsonplaceholder.typicode.com/users?id=1";
-
-    private void Start()
+    public class DBManager : MonoBehaviour
     {
-        GetData();
-    }
+        [SerializeField] private GameManager _gameManager;
 
-    private void GetData() => StartCoroutine(GetDataCoroutine());
-    
-    private IEnumerator GetDataCoroutine()
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get(uri))
+        private string requestDownloadedText;
+        private Text score;
+        [SerializeField] private string uri = "https://jsonplaceholder.typicode.com/users?id=1";
+
+        private void Start()
         {
-            yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
+            GetData();
+        }
+
+        private void GetData() => StartCoroutine(GetDataCoroutine());
+    
+        private IEnumerator GetDataCoroutine()
+        {
+            using (UnityWebRequest request = UnityWebRequest.Get(uri))
             {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                requestDownloadedText = request.downloadHandler.text;
-                Debug.Log(requestDownloadedText);
+                yield return request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.Log(request.error);
+                }
+                else
+                {
+                    requestDownloadedText = request.downloadHandler.text;
+                    //Debug.Log(requestDownloadedText);
+                }
             }
         }
-    }
 
-    public void PostData() => StartCoroutine(PostDataCoroutine());
+        public void PostData() => StartCoroutine(PostDataCoroutine());
     
-    private IEnumerator PostDataCoroutine()
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("body", $"Your score {_gameManager.score}");
-        using (UnityWebRequest request = UnityWebRequest.Post(uri, form))
+        private IEnumerator PostDataCoroutine()
         {
-            yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
-                Debug.Log(request.error);
-            else
+            WWWForm form = new WWWForm();
+            form.AddField("body", $"Your score {_gameManager.Score}");
+            using (UnityWebRequest request = UnityWebRequest.Post(uri, form))
             {
-                requestDownloadedText = request.downloadHandler.text;
-                Debug.Log(request.downloadHandler.text);
+                yield return request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                    Debug.Log(request.error);
+                else
+                {
+                    requestDownloadedText = request.downloadHandler.text;
+                    //Debug.Log(request.downloadHandler.text);
+                }
             }
-    }
+        }
     }
 }

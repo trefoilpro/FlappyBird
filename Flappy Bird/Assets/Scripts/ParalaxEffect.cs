@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class ParalaxEffect : MonoBehaviour
 {
-    private MeshRenderer paralaxEffectMeshRenderer;
     [SerializeField] private float animationSpeed = 1f;
+    
+    private MeshRenderer paralaxEffectMeshRenderer;
 
     private void Awake()
     {
