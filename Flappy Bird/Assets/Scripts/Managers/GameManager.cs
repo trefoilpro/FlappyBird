@@ -27,6 +27,7 @@ namespace Managers
 
         public void Awake()
         {
+            //Reset();
             highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         
             Application.targetFrameRate = 144;
@@ -98,6 +99,11 @@ namespace Managers
                 PlayerPrefs.SetInt("HighScore", Score);
                 highScoreText.text = Score.ToString();
             }
+        }
+        
+        private void Reset()
+        {
+            PlayerPrefs.DeleteKey("HighScore");
         }
     }
 }
