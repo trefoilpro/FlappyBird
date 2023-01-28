@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class ParalaxEffect : MonoBehaviour
 {
-    [SerializeField] private float animationSpeed = 1f;
+    [SerializeField] private float _animationSpeed = 1f;
     
-    private MeshRenderer paralaxEffectMeshRenderer;
+    private MeshRenderer _paralaxEffectMeshRenderer;
 
     private void Awake()
     {
-        paralaxEffectMeshRenderer = GetComponent<MeshRenderer>();
+        _paralaxEffectMeshRenderer = GetComponent<MeshRenderer>();
     }
 
     private void Update()
     {
-        paralaxEffectMeshRenderer.material.mainTextureOffset += new Vector2(animationSpeed * Time.deltaTime, 0);
+        _paralaxEffectMeshRenderer.material.mainTextureOffset += new Vector2(_animationSpeed * Time.deltaTime, 0);
     }
 }

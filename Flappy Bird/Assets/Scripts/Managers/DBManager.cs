@@ -9,9 +9,9 @@ namespace Managers
     {
         [SerializeField] private GameManager _gameManager;
 
-        private string requestDownloadedText;
-        private Text score;
-        [SerializeField] private string uri = "https://jsonplaceholder.typicode.com/users?id=1";
+        private string _requestDownloadedText;
+        private Text _score;
+        private string _uri = "https://jsonplaceholder.typicode.com/users?id=1";
 
         private void Start()
         {
@@ -22,7 +22,7 @@ namespace Managers
     
         private IEnumerator GetDataCoroutine()
         {
-            using (UnityWebRequest request = UnityWebRequest.Get(uri))
+            using (UnityWebRequest request = UnityWebRequest.Get(_uri))
             {
                 yield return request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
@@ -31,7 +31,7 @@ namespace Managers
                 }
                 else
                 {
-                    requestDownloadedText = request.downloadHandler.text;
+                    _requestDownloadedText = request.downloadHandler.text;
                     //Debug.Log(requestDownloadedText);
                 }
             }
@@ -43,14 +43,14 @@ namespace Managers
         {
             WWWForm form = new WWWForm();
             form.AddField("body", $"Your score {_gameManager.Score}");
-            using (UnityWebRequest request = UnityWebRequest.Post(uri, form))
+            using (UnityWebRequest request = UnityWebRequest.Post(_uri, form))
             {
                 yield return request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                     Debug.Log(request.error);
                 else
                 {
-                    requestDownloadedText = request.downloadHandler.text;
+                    _requestDownloadedText = request.downloadHandler.text;
                     //Debug.Log(request.downloadHandler.text);
                 }
             }

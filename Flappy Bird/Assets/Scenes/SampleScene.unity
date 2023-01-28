@@ -915,12 +915,12 @@ MonoBehaviour:
   _playerAnimation: {fileID: 1790017977}
   _pipeSpawner: {fileID: 1184890782}
   _dbManager: {fileID: 1790017982}
-  scoreText: {fileID: 1403889222}
-  highScoreText: {fileID: 1483125055}
-  highScore: {fileID: 1407021203}
-  playButton: {fileID: 704187018}
-  gameOver: {fileID: 819259825}
-  getReady: {fileID: 1266246229}
+  _scoreText: {fileID: 1403889222}
+  _highScoreText: {fileID: 1483125055}
+  _highScore: {fileID: 1407021203}
+  _playButton: {fileID: 704187018}
+  _gameOver: {fileID: 819259825}
+  _getReady: {fileID: 1266246229}
 --- !u!4 &1179672392
 Transform:
   m_ObjectHideFlags: 0
@@ -964,14 +964,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02f9df2636ecba459bb6b8eed16339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipesDifficultyPrefab:
+  _pipesDifficultyPrefab:
   - {fileID: 5037703806553882427, guid: 6eed19ae7657b70478dc87b057dd81bc, type: 3}
-  - {fileID: 1143868263492694968, guid: ff15692201b7809488dd92ae3cbc1dbf, type: 3}
   - {fileID: 9069493859571758223, guid: 84b32b124e93c2b40926251237b32326, type: 3}
   - {fileID: 3646403684267855000, guid: 3cb4bdc7ddd0dcb40b29bf62ec58df33, type: 3}
+  - {fileID: 1143868263492694968, guid: ff15692201b7809488dd92ae3cbc1dbf, type: 3}
   - {fileID: 2570813289462787816, guid: 8b2dc0bf3bf3c6f44872dc2427f57a6b, type: 3}
-  spawnRate: 1
-  spawnTime: 1
+  _spawnRate: 1
+  _spawnTime: 1
 --- !u!4 &1184890783
 Transform:
   m_ObjectHideFlags: 0
@@ -1588,11 +1588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12fa513af3c34a94e85db99cde1a43ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
+  _sprites:
   - {fileID: 21300000, guid: 18bb800e49773df49b84777b4cecd7b9, type: 3}
   - {fileID: 21300000, guid: 3db4e14be6b89ef4a9f298d9a9bcfc74, type: 3}
   - {fileID: 21300000, guid: da3552ca1b2228643902b628228d4228, type: 3}
-  - {fileID: 21300000, guid: 3db4e14be6b89ef4a9f298d9a9bcfc74, type: 3}
 --- !u!114 &1790017978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1606,7 +1605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1179672391}
-  strength: 7
+  _strength: 7
+  _playerRigidbody2D: {fileID: 1790017980}
 --- !u!58 &1790017979
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1670,7 +1670,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1179672391}
-  uri: https://jsonplaceholder.typicode.com/users?id=1
 --- !u!1 &1793722750
 GameObject:
   m_ObjectHideFlags: 0

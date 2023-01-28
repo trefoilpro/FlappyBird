@@ -4,21 +4,21 @@ namespace Pipes
 {
     public class PipesMovement : MonoBehaviour
     {
-        [SerializeField] private float speed = 5f;
+        private float _speed = 5f;
     
-        private float leftEdge;
+        private float _leftEdge;
 
         private void Start()
         {
             if (Camera.main != null) 
-                leftEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 5f;
+                _leftEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 5f;
         }
 
         private void Update()
         {
-            transform.position += Vector3.left * (speed * Time.deltaTime);
+            transform.position += Vector3.left * (_speed * Time.deltaTime);
         
-            if (transform.position.x < leftEdge)
+            if (transform.position.x < _leftEdge)
             {
                 Destroy(gameObject);    
             }

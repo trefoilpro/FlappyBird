@@ -4,15 +4,15 @@ namespace Player
 {
     public class PlayerAnimation : MonoBehaviour
     {
-        [SerializeField] private Sprite[] sprites;
+        [SerializeField] private Sprite[] _sprites;
     
-        private SpriteRenderer playerSpriteRenderer;
+        private SpriteRenderer _playerSpriteRenderer;
     
-        private int spriteIndex;
+        private int _spriteIndex;
 
         private void Awake()
         {
-            playerSpriteRenderer = GetComponent<SpriteRenderer>();
+            _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
@@ -22,14 +22,14 @@ namespace Player
 
         private void AnimateSprite()
         {
-            spriteIndex++;
+            _spriteIndex++;
 
-            if (spriteIndex >= sprites.Length)
+            if (_spriteIndex >= _sprites.Length)
             {
-                spriteIndex = 0;
+                _spriteIndex = 0;
             }
         
-            playerSpriteRenderer.sprite = sprites[spriteIndex];
+            _playerSpriteRenderer.sprite = _sprites[_spriteIndex];
         }
     }
 }

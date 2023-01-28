@@ -7,7 +7,7 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public int Score { get; set; }
+        public int Score { get; private set; }
         public bool PlayerNeedTutorial { get; set; } = true;
         
         public GameObject tutorial;
@@ -17,41 +17,41 @@ namespace Managers
         [SerializeField] private PipeSpawner _pipeSpawner;
         [SerializeField] private DBManager _dbManager;
     
-        [SerializeField] private Text scoreText;
-        [SerializeField] private Text highScoreText;
+        [SerializeField] private Text _scoreText;
+        [SerializeField] private Text _highScoreText;
     
-        [SerializeField] private GameObject highScore;
-        [SerializeField] private GameObject playButton;
-        [SerializeField] private GameObject gameOver;
-        [SerializeField] private GameObject getReady;
+        [SerializeField] private GameObject _highScore;
+        [SerializeField] private GameObject _playButton;
+        [SerializeField] private GameObject _gameOver;
+        [SerializeField] private GameObject _getReady;
 
         public void Awake()
         {
             //Reset();
-            highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+            _highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         
             Application.targetFrameRate = 144;
         
             Pause();
         
-            gameOver.SetActive(false);
+            _gameOver.SetActive(false);
         }
 
         public void Play()
         {
             _pipeSpawner.PipesSpwaned = 0;
             Score = 0;
-            scoreText.text = Score.ToString();
+            _scoreText.text = Score.ToString();
         
             if (PlayerNeedTutorial)
             {
                 tutorial.SetActive(true);
             }
             
-            playButton.SetActive(false);
-            getReady.SetActive(false);
-            gameOver.SetActive(false);
-            highScore.SetActive(false);
+            _playButton.SetActive(false);
+            _getReady.SetActive(false);
+            _gameOver.SetActive(false);
+            _highScore.SetActive(false);
 
             Time.timeScale = 1f;
         
@@ -76,9 +76,9 @@ namespace Managers
 
         public void GameOver()
         {
-            gameOver.SetActive(true);
-            playButton.SetActive(true);
-            highScore.SetActive(true);
+            _gameOver.SetActive(true);
+            _playButton.SetActive(true);
+            _highScore.SetActive(true);
             tutorial.SetActive(false);
 
             SavingHighScore();
@@ -89,7 +89,7 @@ namespace Managers
         public void InceaseScore()
         {
             Score++;
-            scoreText.text = Score.ToString();
+            _scoreText.text = Score.ToString();
         }
     
         private void SavingHighScore()
@@ -97,7 +97,7 @@ namespace Managers
             if (Score > PlayerPrefs.GetInt("HighScore", 0))
             {
                 PlayerPrefs.SetInt("HighScore", Score);
-                highScoreText.text = Score.ToString();
+                _highScoreText.text = Score.ToString();
             }
         }
         

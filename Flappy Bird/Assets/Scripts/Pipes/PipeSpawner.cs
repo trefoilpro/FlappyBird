@@ -7,18 +7,18 @@ namespace Pipes
     {
         public float PipesSpwaned { get; set; }
         
-        [SerializeField] private GameObject[] pipesDifficultyPrefab;
+        [SerializeField] private GameObject[] _pipesDifficultyPrefab;
     
-        [SerializeField] private float spawnRate = 1f;
-        [SerializeField] private float spawnTime = 1f;
+        [SerializeField] private float _spawnRate = 1f;
+        [SerializeField] private float _spawnTime = 1f;
 
-        private const float MinHeight = -1f;
-        private const float MaxHeight = 1f;
+        private const float _minHeight = -1f;
+        private const float _maxHeight = 1f;
 
-        private float chanceOfRidingPipe;
-        private float chanceOfTitlePipe = 20f;
+        private float _chanceOfRidingPipe;
+        private float _chanceOfTitlePipe = 20f;
     
-        private int difficulty;
+        private int _difficulty;
 
         private void Awake()
         {
@@ -56,39 +56,39 @@ namespace Pipes
             switch (gameDifficulty)
             {
                 case Difficulty.Easy:
-                    difficulty = 0;
-                    chanceOfRidingPipe = 0f;
-                    chanceOfTitlePipe = 20f;
+                    _difficulty = 0;
+                    _chanceOfRidingPipe = 0f;
+                    _chanceOfTitlePipe = 20f;
                     break;
             
                 case Difficulty.Medium:
-                    difficulty = 1;
-                    chanceOfRidingPipe = 20f;
-                    chanceOfTitlePipe = 20f;
+                    _difficulty = 1;
+                    _chanceOfRidingPipe = 20f;
+                    _chanceOfTitlePipe = 20f;
                     break;
             
                 case Difficulty.Hard:
-                    difficulty = 2;
-                    chanceOfRidingPipe = 30f;
-                    chanceOfTitlePipe = 30f;
+                    _difficulty = 2;
+                    _chanceOfRidingPipe = 30f;
+                    _chanceOfTitlePipe = 30f;
                     break;
             
                 case Difficulty.Impossible:
-                    difficulty = 3;
-                    chanceOfRidingPipe = 50f;
-                    chanceOfTitlePipe = 30f;
+                    _difficulty = 3;
+                    _chanceOfRidingPipe = 50f;
+                    _chanceOfTitlePipe = 30f;
                     break;
             
                 case Difficulty.Unreal:
-                    difficulty = 4;
-                    chanceOfRidingPipe = 100f;
-                    chanceOfTitlePipe = 50f;
+                    _difficulty = 4;
+                    _chanceOfRidingPipe = 100f;
+                    _chanceOfTitlePipe = 50f;
                     break;
             }
         }
         private void OnEnable()
         {
-            InvokeRepeating(nameof(Spawn), spawnTime, spawnRate);
+            InvokeRepeating(nameof(Spawn), _spawnTime, _spawnRate);
         }
 
         private void OnDisable()
@@ -102,19 +102,19 @@ namespace Pipes
         
             SetDifficulty(GetDifficulty());
         
-            GameObject pipes = Instantiate(pipesDifficultyPrefab[difficulty], transform.position, Quaternion.identity);
+            GameObject pipes = Instantiate(_pipesDifficultyPrefab[_difficulty], transform.position, Quaternion.identity);
         
-            if (Random.Range(0f, 100f) < chanceOfTitlePipe)
+            if (Random.Range(0f, 100f) < _chanceOfTitlePipe)
             {
                 pipes.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(-33f, 33f));
             }
         
-            if (Random.Range(0f, 100f) < chanceOfRidingPipe)
+            if (Random.Range(0f, 100f) < _chanceOfRidingPipe)
             {
                 pipes.GetComponent<PipeRiding>().enabled = true;
             }
         
-            pipes.transform.position += Vector3.up * Random.Range(MinHeight, MaxHeight);
+            pipes.transform.position += Vector3.up * Random.Range(_minHeight, _maxHeight);
         }
     }
 }
